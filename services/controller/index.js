@@ -1,7 +1,9 @@
 const express = require('express');
 const shipping = require('./shipping');
 const inventory = require('./inventory');
+const rating = require('./rating');
 const cors = require('cors');
+const client = require('./shipping');
 
 const app = express();
 app.use(cors());
@@ -41,6 +43,21 @@ app.get('/shipping/:cep', (req, res, next) => {
         }
     );
 });
+
+// Rota: GET /rating/:id
+app.get('/rating/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10);
+
+  rating.GetRating({ productId: id }, (err, response) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send({ error: 'something failed :(' });
+    }
+
+    res.json(response);
+  });
+});
+
 
 /**
  * Inicia o router

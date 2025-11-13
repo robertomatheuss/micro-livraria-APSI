@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+service RatingService {
+  rpc GetRating(RatingRequest) returns (RatingResponse) {}
+}
+
+message RatingRequest {
+  int32 productId = 1;
+}
+
+message RatingResponse {
+  int32 productId = 1;
+  float average = 2;
+  int32 count = 3;
+}
